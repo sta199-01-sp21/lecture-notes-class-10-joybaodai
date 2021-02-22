@@ -50,16 +50,26 @@ xtabs(~ Treatment + Improved, data = Arthritis) %>%
 
 - How many patients were enrolled in the clinical trial?
 
+  84 patients
+
 - What is the probability a randomly selected patient received the placebo?
+
+  43/84 -> 52%
 
 - What is the probability a randomly selected patient received the placebo
   and had a marked improvement?
   
+  7/84 -> 8.3%
+  
 - What is the probability a randomly selected patient received the placebo
   and the treatment?
   
+  0% (**disjoint probability**: two events can not occur at the same time)
+  
 - What is the probability a randomly selected patient had some improvement or
   was on the treatment?
+  
+  48/84
 
 ## Using computer simulations to calculate probabilities
 
@@ -72,6 +82,8 @@ a vector called `marbles`.
 marbles <- c("red", "red", "white", "red", "blue", "blue", "red", "blue")
 ```
 
+`c()` combines things into *vectors*
+
 Suppose we draw a single marble from our imaginary box, where all the marbles
 are equally likely to be selected. What is the probability the marble is blue? 
 How about white?
@@ -81,6 +93,8 @@ We can simulate this "drawing" with the `sample()` function.
 ```{r sample}
 sample(marbles, size = 1)
 ```
+
+**Each time you use the `sample()` command, it's a different draw. 
 
 We produced one random outcome from this experiment. To estimate the probability 
 of say getting a white marble, we need to repeat this experiment many many
@@ -95,12 +109,16 @@ experiment.
 draw_results <- sample(marbles, size = 10000, replace = TRUE)
 ```
 
+** `replace = FALSE` is default, so must specify "TRUE". 
+
 ```{r summarize_draws}
 counts <- table(draw_results)
 prop.table(counts)
 ```
 
 How close is this value to the "true" probability?
+
+Relatively close; as you increase sample size, the value gets closer to the true probability.
 
 **To summarize our process:**
 
@@ -158,7 +176,9 @@ Perform a simulation to compute this empirical probability.
 Write down your guess to the answer before you calculate it.
 
 ```{r simulate_rolls}
-
+roll_results <- tibble(
+  die_1 = replicate(n = 10000, expr = sample(1:6, size = 1)),
+  die_2 - replicate(n = 10000, expr = sample(1:6, size = 1))
 ```
 
 ```{r identify_events}
